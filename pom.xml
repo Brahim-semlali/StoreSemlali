@@ -52,6 +52,13 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- PostgreSQL (pour Fly Postgres / BDD managée) -->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 		<!-- H2 (pour profil Fly / démo sans serveur MySQL) -->
 		<dependency>
 			<groupId>com.h2database</groupId>
