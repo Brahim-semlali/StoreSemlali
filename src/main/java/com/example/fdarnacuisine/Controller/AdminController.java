@@ -7,12 +7,19 @@ import com.example.fdarnacuisine.CommandeRepository;
 import com.example.fdarnacuisine.UserRepository;
 import com.example.fdarnacuisine.VisitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -32,6 +39,9 @@ public class AdminController {
 
     @Autowired
     private VisitRepository visitRepository;
+
+    @Value("${fdarna.upload-dir:/data/uploads}")
+    private String uploadDir;
 
     @GetMapping("/admin/catalogue")
     public String afficherCatalogue(ModelMap model) {
@@ -81,13 +91,16 @@ public class AdminController {
     public String ajouterRepas(@RequestParam String name,
                                @RequestParam Double price,
                                @RequestParam("description") String description,
-                               @RequestParam("urlImage") String imageUrl) {
+                               @RequestParam(value = "urlImage", required = false) String imageUrl,
+                               @RequestParam(value = "imageFile", required = false) MultipartFile imageFile) {
+
+        String finalImageUrl = resolveImageUrl(imageUrl, imageFile);
 
         Repas repas = new Repas();
         repas.setName(name);
         repas.setPrice(price);
         repas.setImage(description);
-        repas.setUrlImage(imageUrl);
+        repas.setUrlImage(finalImageUrl);
         repasRepository.save(repas);
 
         return "redirect:/admin/catalogue";
@@ -108,16 +121,41 @@ public class AdminController {
                                    @RequestParam String name,
                                    @RequestParam Double price,
                                    @RequestParam("description") String description,
-                                   @RequestParam("urlImage") String imageUrl) {
+                                   @RequestParam(value = "urlImage", required = false) String imageUrl,
+                                   @RequestParam(value = "imageFile", required = false) MultipartFile imageFile) {
         Repas repas = repasRepository.findById(id).orElse(null);
         if (repas != null) {
             repas.setName(name);
             repas.setPrice(price);
             repas.setImage(description);
-            repas.setUrlImage(imageUrl);
+
+            String finalImageUrl = resolveImageUrl(imageUrl, imageFile);
+            if (StringUtils.hasText(finalImageUrl)) {
+                repas.setUrlImage(finalImageUrl);
+            }
+
             repasRepository.save(repas);
         }
         return "redirect:/admin/catalogue";
+    }
+
+    private String resolveImageUrl(String imageUrl, MultipartFile imageFile) {
+        try {
+            if (imageFile != null && !imageFile.isEmpty()) {
+                Path uploadPath = Paths.get(uploadDir);
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                }
+                String originalFilename = StringUtils.cleanPath(imageFile.getOriginalFilename());
+                String filename = System.currentTimeMillis() + "_" + originalFilename;
+                Path destination = uploadPath.resolve(filename);
+                Files.copy(imageFile.getInputStream(), destination);
+                return "/uploads/" + filename;
+            }
+        } catch (IOException e) {
+            // en cas d'erreur, on retombe sur l'URL fournie
+        }
+        return imageUrl;
     }
 
     @PostMapping("/admin/repas/delete")

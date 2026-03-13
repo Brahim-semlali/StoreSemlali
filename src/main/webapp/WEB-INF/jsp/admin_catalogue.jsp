@@ -214,7 +214,7 @@
             <h5 class="card-title mb-3">
                 <i class="bi bi-plus-circle me-2 text-success"></i>Ajouter un repas
             </h5>
-            <form action="/admin/repas/add" method="post" class="row g-3">
+            <form action="/admin/repas/add" method="post" class="row g-3" enctype="multipart/form-data">
                 <div class="col-md-3">
                     <label class="form-label small text-muted">Nom</label>
                     <input type="text" name="name" class="form-control" placeholder="Ex: Tajine poulet citron" required>
@@ -229,7 +229,13 @@
                 </div>
                 <div class="col-md-3">
                     <label class="form-label small text-muted">URL de l&apos;image (colonne url_image)</label>
-                    <input type="text" name="urlImage" class="form-control" placeholder="https://..." required>
+                    <input type="text" name="urlImage" class="form-control" placeholder="https://...">
+                    <small class="text-muted">Optionnel si vous choisissez un fichier.</small>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label small text-muted">Fichier image (depuis votre PC)</label>
+                    <input type="file" name="imageFile" class="form-control" accept="image/*">
+                    <small class="text-muted">Si un fichier est choisi, il sera utilisé à la place de l&apos;URL.</small>
                 </div>
                 <div class="col-md-1 d-grid align-self-end">
                     <button type="submit" class="btn btn-success">
