@@ -5,6 +5,7 @@ import com.example.fdarnacuisine.Model.Visit;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public interface VisitRepository extends JpaRepository<Visit, Long> {
 
@@ -15,5 +16,7 @@ public interface VisitRepository extends JpaRepository<Visit, Long> {
     long countByUser(User user);
 
     long countByVisitedAtAfter(LocalDateTime since);
+
+    Optional<Visit> findTopByUserOrderByVisitedAtDesc(User user);
 }
 

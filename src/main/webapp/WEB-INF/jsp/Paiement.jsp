@@ -4,66 +4,18 @@
     <title>Paiement</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="${pageContext.request.contextPath}/css/modern.css" rel="stylesheet">
     <style>
-        body{
-            background:#fff7ec;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        }
-
-        .payment-card{
-            border:none;
-            border-radius:16px;
-            box-shadow:0 10px 25px rgba(0,0,0,0.08);
-        }
-
-        .payment-title{
-            position:relative;
-            display:inline-block;
-        }
-
-        .payment-title::after{
-            content:"";
-            position:absolute;
-            left:50%;
-            transform:translateX(-50%);
-            bottom:-8px;
-            width:60%;
-            height:3px;
-            border-radius:999px;
-            background:#e67e22;
-        }
-
-        .official-payment{
-            border-radius:12px;
-            background:#f8f9fa;
-        }
-
-        /* -------- Responsive paiement -------- */
-        @media (max-width: 767.98px) {
-            .payment-card{
-                border-radius:14px;
-            }
-
-            .payment-title::after{
-                width:40%;
-            }
-
-            .card.payment-card{
-                padding:1.25rem !important;
-            }
-        }
+        .payment-title-modern { position: relative; display: inline-block; }
+        .payment-title-modern::after { content: ""; position: absolute; left: 50%; transform: translateX(-50%); bottom: -8px; width: 48px; height: 4px; border-radius: 2px; background: var(--store-primary); }
+        .official-payment { border-radius: var(--radius-sm); background: var(--store-primary-light); }
     </style>
-
 </head>
-
 <body>
 
 <div class="container mt-5">
-
-    <h2 class="text-center mb-4 payment-title">Paiement</h2>
-
-    <div class="card p-4 payment-card">
+    <h2 class="text-center mb-4 payment-title-modern fw-bold">Paiement</h2>
+    <div class="admin-card-modern card p-4">
 
         <form action="/paiement/cmi" method="post">
 
@@ -113,7 +65,7 @@
                 Pour régler votre commande par carte bancaire sur un site officiel sécurisé (CMI / banque), cliquez sur le bouton ci‑dessous.&nbsp;
                 Le montant total de votre commande sera transmis à la plateforme de paiement.
                 <br>
-                <button type="submit" class="btn btn-primary w-100 mt-3">
+                <button type="submit" class="btn btn-modern w-100 mt-3">
                     Continuer vers le paiement par carte (${total} DH)
                 </button>
             </div>

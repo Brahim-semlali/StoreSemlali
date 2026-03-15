@@ -9,9 +9,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 public class AuthentifController {
+
+    private static final Logger log = LoggerFactory.getLogger(AuthentifController.class);
 
     @GetMapping("/login")
     public String Log(){
@@ -31,12 +35,15 @@ public class AuthentifController {
 
         if(user != null && user.getPassword().equals(password) && user.getRole().equals("USER")) {
             session.setAttribute("user", user);
+            log.info("POST /login — connexion USER ok email={} userId={}", email, user.getId());
             return "redirect:/home";
         } else if (user != null && user.getPassword().equals(password) && user.getRole().equals("ADMIN")) {
             session.setAttribute("user", user);
-            return "redirect:/admin/catalogue";
+            log.info("POST /login — connexion ADMIN ok email={} userId={}", email, user.getId());
+            return "redirect:/admin";
         }
 
+        log.warn("POST /login — échec email={}", email);
         model.addAttribute("error","Email ou password incorrect");
         return "login";
     }
@@ -55,6 +62,7 @@ public class AuthentifController {
 
 
         if (!password.equals(confirmPassword)) {
+            log.warn("POST /signup — mots de passe différents email={}", email);
             model.put("error", "Passwords do not match");
             return "signup";
         }
@@ -62,6 +70,7 @@ public class AuthentifController {
         // Vérifier si email existe
         User existingUser = userRepository.findByEmail(email);
         if(existingUser != null){
+            log.warn("POST /signup — email déjà utilisé email={}", email);
             model.put("error", "Email already registered");
             return "signup";
         }
@@ -73,6 +82,7 @@ public class AuthentifController {
         user.setRole("USER");
 
         userRepository.save(user);
+        log.info("POST /signup — compte créé email={} userId={}", email, user.getId());
 
         // Redirection vers login
         return "redirect:/login";
@@ -80,6 +90,7 @@ public class AuthentifController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
+        log.info("GET /logout — déconnexion");
         session.invalidate();
         return "redirect:/home";
     }

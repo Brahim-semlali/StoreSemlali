@@ -1,0 +1,27 @@
+-- ============================================================
+-- Store Semlali - Boutique de vêtements
+-- Base de données PostgreSQL
+-- ============================================================
+-- 1. Créer la base (en tant que superuser, par ex. postgres) :
+--    CREATE DATABASE storesemlali
+--      WITH ENCODING = 'UTF8'
+--      LC_COLLATE = 'French_France.1252'
+--      LC_CTYPE = 'French_France.1252'
+--      TEMPLATE = template0;
+--
+-- 2. Créer un utilisateur dédié (optionnel) :
+--    CREATE USER storesemlali_user WITH PASSWORD 'votre_mot_de_passe';
+--    GRANT ALL PRIVILEGES ON DATABASE storesemlali TO storesemlali_user;
+--
+-- 3. Se connecter à la base : \c storesemlali
+--
+-- 4. Les tables (users, produits, commandes, reservations, notifications, visits)
+--    sont créées automatiquement par Spring JPA (ddl-auto=update) au démarrage
+--    de l'application. Aucune exécution manuelle de ce script n'est requise
+--    pour le premier démarrage.
+--
+-- 5. Variables d'environnement recommandées pour l'application :
+--    SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/storesemlali
+--    SPRING_DATASOURCE_USERNAME=postgres
+--    SPRING_DATASOURCE_PASSWORD=votre_mot_de_passe
+-- ============================================================

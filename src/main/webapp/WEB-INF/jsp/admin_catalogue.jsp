@@ -4,302 +4,190 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin - Catalogue</title>
+    <title>Admin - Catalogue | Store Semlali</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-    <style>
-        body{
-            background:radial-gradient(circle at top left,#fff3e0,#ffe0c2,#ffe8d2);
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        }
-
-        .admin-navbar{
-            background:#2c3e50;
-            color:#fff;
-        }
-
-        .admin-navbar .navbar-brand{
-            font-weight:600;
-        }
-
-        .badge-env{
-            font-size:0.75rem;
-        }
-
-        .admin-wrapper{
-            padding-top:2rem;
-        }
-
-        .card{
-            border:none;
-            border-radius:18px;
-            box-shadow:0 12px 30px rgba(0,0,0,0.08);
-        }
-
-        .table thead th{
-            border-bottom:0;
-        }
-
-        .table tbody tr:hover{
-            background:#fff8ef;
-        }
-
-        /* -------- Responsive admin -------- */
-        @media (max-width: 991.98px) {
-            .admin-wrapper{
-                padding-top:1.5rem;
-            }
-
-            .card{
-                border-radius:14px;
-                box-shadow:0 8px 22px rgba(0,0,0,0.06);
-            }
-
-            .admin-navbar .navbar-brand{
-                font-size:1.05rem;
-            }
-        }
-
-        @media (max-width: 767.98px) {
-            .admin-wrapper{
-                padding-top:1.25rem;
-            }
-
-            .card-title{
-                font-size:1rem;
-            }
-
-            form.row.g-3 > .col-md-3,
-            form.row.g-3 > .col-md-2,
-            form.row.g-3 > .col-md-1{
-                flex:0 0 100%;
-                max-width:100%;
-            }
-
-            .table-responsive{
-                font-size:0.85rem;
-            }
-
-            .table img{
-                width:80px !important;
-                height:55px !important;
-            }
-        }
-    </style>
+    <link href="${pageContext.request.contextPath}/css/modern.css" rel="stylesheet">
+    <style>.table img { width:60px; height:45px; object-fit:cover; border-radius:8px; }</style>
 </head>
 <body>
-
-<nav class="navbar navbar-expand-lg admin-navbar">
-    <div class="container">
-        <a class="navbar-brand" href="/home">
-            Fdarna Cuisine <span class="badge bg-warning text-dark badge-env ms-2">Admin</span>
-        </a>
-        <div class="ms-auto">
-            <a href="/home" class="btn btn-sm btn-outline-light">Retour au site</a>
-        </div>
+<nav class="navbar navbar-dark admin-navbar-modern">
+    <div class="container-fluid">
+        <a class="navbar-brand text-white" href="/home">Store Semlali <span class="badge bg-warning text-dark ms-2">Admin</span></a>
+        <a href="/home" class="btn btn-sm btn-outline-light">Retour au site</a>
     </div>
 </nav>
-
-<div class="container admin-wrapper pb-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h2 class="mb-1">Gestion du catalogue</h2>
-            <small class="text-muted">Ajouter, modifier ou supprimer les repas affichés sur la page d&apos;accueil.</small>
-        </div>
-        <span class="text-muted small d-none d-md-inline">
-            Total repas : <strong>${fn:length(repasList)}</strong>
-        </span>
+<div class="admin-layout">
+    <div class="admin-sidebar-modern py-3">
+        <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link" href="/admin/clients"><i class="bi bi-people me-2"></i>Clients</a></li>
+            <li class="nav-item"><a class="nav-link" href="/admin/commandes"><i class="bi bi-bag-check me-2"></i>Commandes</a></li>
+            <li class="nav-item"><a class="nav-link active" href="/admin/catalogue"><i class="bi bi-grid me-2"></i>Catalogue</a></li>
+            <li class="nav-item"><a class="nav-link" href="/admin/categories"><i class="bi bi-folder2 me-2"></i>Catégories</a></li>
+        </ul>
     </div>
+    <div class="admin-content-modern flex-grow-1">
+        <h2 class="mb-4">Catalogue</h2>
+        <c:if test="${param.error == 'min1image'}">
+            <div class="alert alert-warning">Au moins 1 image est requise pour un produit.</div>
+        </c:if>
 
-    <!-- Statistiques du site -->
-    <div class="row g-3 mb-4">
-        <div class="col-6 col-md-3">
-            <div class="card h-100">
-                <div class="card-body py-3">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <div class="text-muted small">Clients inscrits</div>
-                            <div class="fw-bold fs-5">${totalClientsInscrits}</div>
-                        </div>
-                        <span class="badge bg-success-subtle text-success border border-success-subtle">
-                            <i class="bi bi-people-fill"></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="card h-100">
-                <div class="card-body py-3">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <div class="text-muted small">Clients ayant commandé</div>
-                            <div class="fw-bold fs-5">${clientsAyantCommande}</div>
-                        </div>
-                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle">
-                            <i class="bi bi-bag-check"></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="card h-100">
-                <div class="card-body py-3">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <div class="text-muted small">Inscrits sans commande</div>
-                            <div class="fw-bold fs-5">${clientsInscritsSansCommande}</div>
-                        </div>
-                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle">
-                            <i class="bi bi-eye"></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-md-3">
-            <div class="card h-100">
-                <div class="card-body py-3">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                            <div class="text-muted small">Commandes totales</div>
-                            <div class="fw-bold fs-5">${totalCommandes}</div>
-                        </div>
-                        <span class="badge bg-dark text-white">
-                            <i class="bi bi-receipt-cutoff"></i>
-                        </span>
-                    </div>
-                    <div class="text-muted small mt-1 d-md-none">
-                        Total repas : <strong>${fn:length(repasList)}</strong>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-6">
-            <div class="card h-100">
-                <div class="card-body py-3">
-                    <div class="d-flex align-items-center justify-content-between mb-2">
-                        <div>
-                            <div class="text-muted small">Visites du site (toutes)</div>
-                            <div class="fw-bold fs-5">${totalVisites}</div>
-                        </div>
-                        <span class="badge bg-info-subtle text-info border border-info-subtle">
-                            <i class="bi bi-graph-up-arrow"></i>
-                        </span>
-                    </div>
-                    <div class="small text-muted">
-                        <span class="me-3">
-                            Anonymes : <strong>${visitesAnonymes}</strong>
-                        </span>
-                        <span>
-                            Connectés : <strong>${visitesConnectees}</strong>
-                        </span>
-                    </div>
-                    <hr class="my-2">
-                    <div class="small text-muted">
-                        <div>Aujourd&apos;hui : <strong>${visitesAujourdHui}</strong></div>
-                        <div>Cette semaine : <strong>${visitesCetteSemaine}</strong></div>
-                        <div>Ce mois-ci : <strong>${visitesCeMois}</strong></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <p class="mb-3"><a href="/admin/categories" class="btn btn-outline-success"><i class="bi bi-folder2 me-1"></i>Gérer les catégories</a> (ajouter, modifier, supprimer, image)</p>
 
-    <div class="card mb-4">
-        <div class="card-body">
-            <h5 class="card-title mb-3">
-                <i class="bi bi-plus-circle me-2 text-success"></i>Ajouter un repas
-            </h5>
-            <form action="/admin/repas/add" method="post" class="row g-3" enctype="multipart/form-data">
-                <div class="col-md-3">
-                    <label class="form-label small text-muted">Nom</label>
-                    <input type="text" name="name" class="form-control" placeholder="Ex: Tajine poulet citron" required>
-                </div>
-                <div class="col-md-2">
-                    <label class="form-label small text-muted">Prix (DH)</label>
-                    <input type="number" name="price" step="0.01" class="form-control" placeholder="Ex: 75" required>
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label small text-muted">Description (colonne image)</label>
-                    <input type="text" name="description" class="form-control" placeholder="Ex: Tajine fondant aux citrons">
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label small text-muted">URL de l&apos;image (colonne url_image)</label>
-                    <input type="text" name="urlImage" class="form-control" placeholder="https://...">
-                    <small class="text-muted">Optionnel si vous choisissez un fichier.</small>
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label small text-muted">Fichier image (depuis votre PC)</label>
-                    <input type="file" name="imageFile" class="form-control" accept="image/*">
-                    <small class="text-muted">Si un fichier est choisi, il sera utilisé à la place de l&apos;URL.</small>
-                </div>
-                <div class="col-md-1 d-grid align-self-end">
-                    <button type="submit" class="btn btn-success">
-                        <i class="bi bi-check2"></i>
-                    </button>
-                </div>
-            </form>
+        <!-- Un seul formulaire : images par URL ou par fichier -->
+        <div class="admin-card-modern mb-4">
+            <div class="card-body">
+                <h5 class="card-title mb-3"><i class="bi bi-plus-circle me-2 text-primary"></i>Ajouter un produit</h5>
+                <p class="small text-muted mb-3">Pour chaque image : indiquez une <strong>URL</strong> (ex. https://...) <strong>ou</strong> choisissez un <strong>fichier</strong>. Au moins l'image 1 est obligatoire.</p>
+                <form id="formAddProduit" action="/admin/produit/add-by-url" method="post" class="row g-3">
+                    <div class="col-md-2"><label class="form-label small">Nom</label><input type="text" name="name" class="form-control" required></div>
+                    <div class="col-md-2"><label class="form-label small">Prix (DH)</label><input type="number" name="price" step="0.01" class="form-control" required></div>
+                    <div class="col-md-2"><label class="form-label small">Catégorie</label>
+                        <select name="categorieId" class="form-select">
+                            <option value="">— Aucune —</option>
+                            <c:forEach items="${categories}" var="c"><option value="${c.id}">${c.name}</option></c:forEach>
+                        </select>
+                    </div>
+                    <div class="col-md-2"><label class="form-label small">Tailles</label><input type="text" name="taillesDisponibles" class="form-control" placeholder="S,M,L,XL"></div>
+                    <div class="col-md-4"><label class="form-label small">Description</label><input type="text" name="description" class="form-control"></div>
+                    <div class="col-12">
+                        <label class="form-label small">Images (1 à 4) — URL ou fichier</label>
+                        <div class="row g-3">
+                            <div class="col-md-6 col-lg-3">
+                                <label class="form-label small text-muted">Image 1 *</label>
+                                <input type="text" name="urlImage" class="form-control form-control-sm" placeholder="URL (https://... ou /uploads/...)">
+                                <input type="file" id="file1" class="form-control form-control-sm mt-1" accept="image/*">
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <label class="form-label small text-muted">Image 2</label>
+                                <input type="text" name="urlImage2" class="form-control form-control-sm" placeholder="URL">
+                                <input type="file" id="file2" class="form-control form-control-sm mt-1" accept="image/*">
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <label class="form-label small text-muted">Image 3</label>
+                                <input type="text" name="urlImage3" class="form-control form-control-sm" placeholder="URL">
+                                <input type="file" id="file3" class="form-control form-control-sm mt-1" accept="image/*">
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <label class="form-label small text-muted">Image 4</label>
+                                <input type="text" name="urlImage4" class="form-control form-control-sm" placeholder="URL">
+                                <input type="file" id="file4" class="form-control form-control-sm mt-1" accept="image/*">
+                            </div>
+                        </div>
+                        <small class="text-muted d-block mt-1" id="uploadStatus"></small>
+                    </div>
+                    <div class="col-12"><button type="submit" class="btn btn-modern" id="btnAddWithFile">Ajouter le produit</button></div>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title mb-3">
-                <i class="bi bi-list-ul me-2"></i>Liste des repas (BD)
-            </h5>
-            <div class="table-responsive">
-                <table class="table align-middle mb-0">
-                    <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nom</th>
-                        <th>Prix (DH)</th>
-                        <th>Description</th>
-                        <th>Image</th>
-                        <th>Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach items="${repasList}" var="repas">
+        <!-- Liste de tous les produits -->
+        <div class="admin-card-modern">
+            <div class="card-body">
+                <h5 class="card-title mb-3"><i class="bi bi-list-ul me-2"></i>Tous les produits</h5>
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0 admin-table-modern">
+                        <thead>
                         <tr>
-                            <td>${repas.id}</td>
-                            <td>${repas.name}</td>
-                            <td>${repas.price}</td>
-                            <td>${repas.image}</td>
-                            <td>
-                                <img src="${repas.urlImage}" alt="${repas.name}" style="width: 100px; height: 70px; object-fit: cover; border-radius:10px;">
-                            </td>
-                            <td>
-                                <form action="/admin/repas/edit" method="get" class="d-inline">
-                                    <input type="hidden" name="id" value="${repas.id}">
-                                    <button class="btn btn-sm btn-outline-primary me-1" title="Modifier">
-                                        <i class="bi bi-pencil"></i>
-                                    </button>
-                                </form>
-                                <form action="/admin/repas/delete" method="post" class="d-inline">
-                                    <input type="hidden" name="id" value="${repas.id}">
-                                    <button class="btn btn-sm btn-outline-danger">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
+                            <th>ID</th>
+                            <th>Image</th>
+                            <th>Nom</th>
+                            <th>Prix</th>
+                            <th>Catégorie</th>
+                            <th>Tailles</th>
+                            <th>Visible</th>
+                            <th>Action</th>
                         </tr>
-                    </c:forEach>
-                    <c:if test="${empty repasList}">
-                        <tr>
-                            <td colspan="5" class="text-center text-muted">Aucun repas pour le moment. Ajoutez votre premier plat ci-dessus.</td>
-                        </tr>
-                    </c:if>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <c:forEach items="${produitList}" var="p">
+                            <tr class="${p.visible ? '' : 'table-secondary'}">
+                                <td>${p.id}</td>
+                                <td><img src="${p.urlImage}" alt="${p.name}" style="width:60px;height:45px;object-fit:cover;" onerror="this.src='https://placehold.co/60x45/e2e8f0/64748b?text=+'; this.onerror=null;"></td>
+                                <td>${p.name}</td>
+                                <td>${p.price} DH</td>
+                                <td>${p.category}</td>
+                                <td>${p.taillesDisponibles}</td>
+                                <td>
+                                    <form action="/admin/produit/toggle-visibility" method="post" class="d-inline">
+                                        <input type="hidden" name="id" value="${p.id}">
+                                        <c:choose>
+                                            <c:when test="${p.visible}">
+                                                <span class="badge bg-success">Visible</span>
+                                                <button type="submit" class="btn btn-sm btn-outline-warning">Masquer</button>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <span class="badge bg-secondary">Masqué</span>
+                                                <button type="submit" class="btn btn-sm btn-outline-success">Afficher</button>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </form>
+                                </td>
+                                <td>
+                                    <a href="/admin/produit/edit?id=${p.id}" class="btn btn-sm btn-outline-primary me-1">Modifier</a>
+                                    <form action="/admin/produit/delete" method="post" class="d-inline" onsubmit="return confirm('Supprimer ce produit ?');">
+                                        <input type="hidden" name="id" value="${p.id}">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                        <c:if test="${empty produitList}">
+                            <tr><td colspan="8" class="text-center text-muted py-4">Aucun produit.</td></tr>
+                        </c:if>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
+<script>
+(function(){
+    var form = document.getElementById('formAddProduit');
+    if (!form) return;
+    form.addEventListener('submit', function(e){
+        var file1 = document.getElementById('file1');
+        var file2 = document.getElementById('file2');
+        var file3 = document.getElementById('file3');
+        var file4 = document.getElementById('file4');
+        var url1 = form.querySelector('input[name="urlImage"]');
+        var url2 = form.querySelector('input[name="urlImage2"]');
+        var url3 = form.querySelector('input[name="urlImage3"]');
+        var url4 = form.querySelector('input[name="urlImage4"]');
+        var hasUrl1 = url1 && url1.value.trim();
+        var hasFile = (file1 && file1.files.length) || (file2 && file2.files.length) || (file3 && file3.files.length) || (file4 && file4.files.length);
+        if (!hasUrl1 && !hasFile) { e.preventDefault(); alert('Renseignez au moins une URL ou un fichier pour l\'image 1.'); return; }
+        if (!hasFile) return;
+        e.preventDefault();
+        var status = document.getElementById('uploadStatus');
+        var btn = document.getElementById('btnAddWithFile');
+        btn.disabled = true;
+        status.textContent = 'Upload des images...';
+        var uploads = [];
+        function doUpload(fileInput, urlInput, next){
+            if (!fileInput || !fileInput.files || !fileInput.files[0]) { next(); return; }
+            var fd = new FormData();
+            fd.append('file', fileInput.files[0]);
+            fetch('/admin/upload-image', { method: 'POST', body: fd })
+                .then(function(r){ return r.text(); })
+                .then(function(url){ if (url && urlInput) urlInput.value = url; next(); })
+                .catch(function(){ status.textContent = 'Erreur upload.'; btn.disabled = false; });
+        }
+        doUpload(file1, url1, function(){
+            doUpload(file2, url2, function(){
+                doUpload(file3, url3, function(){
+                    doUpload(file4, url4, function(){
+                        if (!form.querySelector('input[name="urlImage"]').value.trim()) { status.textContent = 'Image 1 obligatoire.'; btn.disabled = false; return; }
+                        status.textContent = ''; form.submit();
+                    });
+                });
+            });
+        });
+    });
+})();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

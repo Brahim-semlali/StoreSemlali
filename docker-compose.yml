@@ -1,17 +1,16 @@
 services:
   db:
-    image: mysql:8.4
+    image: postgres:16
     environment:
-      MYSQL_DATABASE: fdarnacuisine
-      MYSQL_USER: fdarna
-      MYSQL_PASSWORD: fdarna
-      MYSQL_ROOT_PASSWORD: root
+      POSTGRES_DB: storesemlali
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     ports:
-      - "3307:3306"
+      - "5433:5432"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d storesemlali"]
       interval: 5s
       timeout: 3s
       retries: 30
@@ -22,23 +21,13 @@ services:
       db:
         condition: service_healthy
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/fdarnacuisine?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: fdarna
-      SPRING_DATASOURCE_PASSWORD: fdarna
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/storesemlali
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_PROFILES_ACTIVE: prod
     ports:
       - "8081:8080"
 
-  phpmyadmin:
-    image: phpmyadmin:5.2-apache
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-    ports:
-      - "8082:80"
-
 volumes:
-  mysql_data:
+  postgres_data:
 

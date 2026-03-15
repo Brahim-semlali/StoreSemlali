@@ -3,283 +3,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Fdarna Cuisine</title>
+    <title>Store Semlali - Vêtements</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-    <style>
-        :root{
-            --fdarna-primary:#e67e22;
-            --fdarna-dark:#2c3e50;
-            --fdarna-light:#fff7ec;
-        }
-
-        body{
-            background:radial-gradient(circle at top left,#fff3e0,#ffe0c2,#ffe8d2);
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        }
-
-        .navbar{
-            background:rgba(44,62,80,0.95) !important;
-            backdrop-filter: blur(6px);
-            position:sticky;
-            top:0;
-            z-index:1030;
-            box-shadow:0 4px 12px rgba(0,0,0,0.25);
-        }
-
-        .navbar-brand{
-            font-weight:700;
-            letter-spacing:1px;
-            display:flex;
-            align-items:center;
-            gap:0.5rem;
-        }
-
-        .navbar-brand img{
-            height:40px;
-            width:auto;
-        }
-
-        .nav-link.active,
-        .nav-link:hover{
-            color:var(--fdarna-primary) !important;
-        }
-
-        .hero{
-            position:relative;
-            min-height:520px;
-            color:white;
-            display:flex;
-            align-items:center;
-            text-align:left;
-            overflow:hidden;
-        }
-
-        .hero::before{
-            content:"";
-            position:absolute;
-            inset:0;
-            background:
-                linear-gradient(120deg, rgba(34,34,34,0.9), rgba(34,34,34,0.6)),
-                url("https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
-            z-index:-1;
-        }
-
-        .hero-content{
-            max-width:520px;
-        }
-
-        .hero-badge{
-            display:inline-flex;
-            align-items:center;
-            gap:0.4rem;
-            padding:0.25rem 0.7rem;
-            border-radius:999px;
-            background:rgba(0,0,0,0.55);
-            font-size:0.8rem;
-            margin-bottom:1rem;
-        }
-
-        .hero h1{
-            font-size:2.6rem;
-            text-transform:none;
-            letter-spacing:1px;
-            margin-bottom:0.5rem;
-        }
-
-        .hero p{
-            margin-top:0.5rem;
-            font-size:1.05rem;
-            max-width:460px;
-            opacity:0.95;
-        }
-
-        .hero-meta{
-            margin-top:1.5rem;
-            display:flex;
-            flex-wrap:wrap;
-            gap:1.25rem;
-            font-size:0.9rem;
-            opacity:0.9;
-        }
-
-        .btn-cta{
-            background:var(--fdarna-primary);
-            border:none;
-            padding:0.8rem 2.2rem;
-            font-weight:600;
-            text-transform:uppercase;
-            letter-spacing:1px;
-            border-radius:999px;
-        }
-
-        .card img{
-            height:200px;
-            object-fit:cover;
-        }
-
-        .card{
-            border:none;
-            border-radius:16px;
-            overflow:hidden;
-            box-shadow:0 10px 25px rgba(0,0,0,0.08);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .card:hover{
-            transform:translateY(-6px);
-            box-shadow:0 16px 35px rgba(0,0,0,0.12);
-        }
-
-        .section-title{
-            position:relative;
-            display:inline-block;
-        }
-
-        .section-title::after{
-            content:"";
-            position:absolute;
-            left:50%;
-            transform:translateX(-50%);
-            bottom:-8px;
-            width:60%;
-            height:3px;
-            border-radius:999px;
-            background:var(--fdarna-primary);
-        }
-
-        .contact-card{
-            background:white;
-            border-radius:16px;
-            padding:1.5rem;
-            box-shadow:0 8px 20px rgba(0,0,0,0.05);
-        }
-
-        .social-link{
-            text-decoration:none;
-            color:inherit;
-        }
-
-        .social-link:hover{
-            color:var(--fdarna-primary);
-        }
-
-        footer{
-            background:var(--fdarna-dark);
-        }
-
-        /* ------ Responsive (mobile & tablettes) ------ */
-        @media (max-width: 991.98px) {
-            .navbar{
-                padding-block:0.35rem;
-            }
-
-            .hero{
-                min-height:420px;
-                text-align:center;
-                padding-top:3.5rem;
-                padding-bottom:2.5rem;
-            }
-
-            .hero::before{
-                background:
-                    linear-gradient(150deg, rgba(34,34,34,0.92), rgba(34,34,34,0.7)),
-                    url("https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=1200&q=80") center/cover no-repeat;
-            }
-
-            .hero-content{
-                margin-inline:auto;
-            }
-
-            .hero h1{
-                font-size:2.1rem;
-            }
-
-            .hero p{
-                font-size:0.98rem;
-            }
-
-            .hero-meta{
-                flex-direction:column;
-                align-items:flex-start;
-                gap:0.5rem;
-            }
-
-            .card img{
-                height:170px;
-            }
-        }
-
-        @media (max-width: 575.98px) {
-            .navbar-brand span{
-                font-size:1.05rem;
-            }
-
-            .hero{
-                min-height:auto;
-            }
-
-            .hero h1{
-                font-size:1.8rem;
-            }
-
-            .hero-badge{
-                font-size:0.75rem;
-            }
-
-            .section-title::after{
-                width:40%;
-            }
-
-            .contact-card{
-                padding:1.1rem;
-            }
-
-            .card{
-                border-radius:14px;
-            }
-
-            .card img{
-                height:150px;
-            }
-        }
-    </style>
+    <link href="${pageContext.request.contextPath}/css/modern.css" rel="stylesheet">
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-modern">
     <div class="container">
         <a class="navbar-brand" href="/home">
-            <img src="<c:url value='/image/logo1.png'/>">
-            <span>FdarnaCuisine</span>
+            <img src="<c:url value='/image/logo.jpeg'/>" loading="lazy" onerror="this.style.display='none'">
+            <span>Store Semlali</span>
         </a>
         <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav mx-auto align-items-lg-center">
+                <li class="nav-item"><a class="nav-link active" href="/home">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="#nouveautes">NOUVEAUTÉ</a></li>
+                <li class="nav-item"><a class="nav-link" href="#categories">PAR PIÈCE</a></li>
+            </ul>
             <ul class="navbar-nav ms-auto align-items-lg-center">
-                <li class="nav-item"><a class="nav-link" href="/home">Accueil</a></li>
-                <li class="nav-item"><a class="nav-link" href="#catalogue">Catalogue</a></li>
-                <li class="nav-item"><a class="nav-link" href="/commandes">Mes commandes</a></li>
-                <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                <li class="nav-item d-none d-lg-block">
+                    <div class="navbar-icons me-2">
+                        <form class="navbar-search d-flex align-items-center" action="/recherche" method="get">
+                            <input type="search" class="form-control" name="q" placeholder="Rechercher un produit..." aria-label="Rechercher un produit">
+                            <button class="btn" type="submit" aria-label="Recherche">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </form>
+                        <a href="/commandes" class="icon-btn" aria-label="Mon panier">
+                            <i class="bi bi-bag"></i>
+                        </a>
+                    </div>
+                </li>
                 <c:choose>
                     <c:when test="${not empty user}">
-                        <li class="nav-item ms-lg-3">
-                            <span class="nav-link disabled text-white-50">
-                                ${user.fullname}
-                            </span>
+                        <li class="nav-item">
+                            <a class="nav-link position-relative" href="/notifications" title="Notifications">
+                                <i class="bi bi-bell fs-5"></i>
+                                <c:if test="${notificationCount != null && notificationCount > 0}">
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.65rem;">${notificationCount > 99 ? '99+' : notificationCount}</span>
+                                </c:if>
+                            </a>
                         </li>
-                        <li class="nav-item ms-lg-2">
-                            <a class="btn btn-sm btn-outline-warning" href="/logout">Se déconnecter</a>
-                        </li>
+                        <li class="nav-item ms-lg-3"><span class="nav-link disabled text-white-50">${user.fullname}</span></li>
+                        <li class="nav-item ms-lg-2"><a class="btn btn-sm btn-outline-warning" href="/logout">Se déconnecter</a></li>
                     </c:when>
                     <c:otherwise>
-                        <li class="nav-item ms-lg-3">
-                            <a class="btn btn-sm btn-outline-light" href="/login">Se connecter</a>
-                        </li>
+                        <li class="nav-item ms-lg-3"><a class="btn btn-sm btn-outline-light" href="/login">Se connecter</a></li>
                     </c:otherwise>
                 </c:choose>
             </ul>
@@ -287,189 +63,343 @@
     </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-    <div class="container py-5">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <div class="hero-content">
-                    <div class="hero-badge">
-                        <i class="bi bi-egg-fried"></i>
-                        <span>Cuisine marocaine fait maison</span>
-                    </div>
-                    <h1>Saveurs maison livrées à Marrakech</h1>
-                    <p>Des plats préparés comme à la maison, avec des recettes familiales et des produits frais, livrés directement à votre porte.</p>
-                    <div class="mt-4 d-flex flex-wrap gap-3">
-                        <a href="#catalogue" class="btn btn-cta text-white">
-                            Voir le catalogue
-                        </a>
-                        <a href="/commandes" class="btn btn-outline-light">
-                            Voir mon panier
-                        </a>
-                    </div>
-                    <div class="hero-meta mt-4">
-                        <span><i class="bi bi-geo-alt me-1"></i>Livraison à Marrakech uniquement</span>
-                        <span><i class="bi bi-clock-history me-1"></i>Commandes à l&apos;avance pour vos événements</span>
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <section class="hero-modern animate-fade-in is-visible" style="background-image:
+                    linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(14,165,233,0.35) 100%),
+                    url('https://images.unsplash.com/photo-1649433911119-7cf48b3e8f50?auto=format&fit=crop&w=1600&q=80');">
+                <div class="container py-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="hero-content" style="max-width:560px;">
+                                <div class="hero-badge"><i class="bi bi-shop"></i> <span>Boutique de vêtements</span></div>
+                                <h1>Mode et style à votre portée</h1>
+                                <p class="hero-desc">Choisissez une catégorie pour découvrir nos articles. Qualité et prix doux.</p>
+                                <div class="mt-4 d-flex flex-wrap gap-3">
+                                    <a href="#categories" class="btn btn-modern text-white">Voir les catégories</a>
+                                    <a href="/commandes" class="btn btn-outline-light">Mon panier</a>
+                                </div>
+                                <div class="hero-meta-modern">
+                                    <span><i class="bi bi-truck me-1"></i>Livraison disponible</span>
+                                    <span><i class="bi bi-credit-card me-1"></i>Paiement sécurisé</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
+        </div>
+        <div class="carousel-item">
+            <section class="hero-modern animate-fade-in" style="background-image:
+                    linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(14,165,233,0.35) 100%),
+                    url('https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=1600&q=80');">
+                <div class="container py-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="hero-content" style="max-width:560px;">
+                                <div class="hero-badge"><i class="bi bi-shop"></i> <span>Nouvelles collections</span></div>
+                                <h1>Inspirez votre style</h1>
+                                <p class="hero-desc">Découvrez nos dernières pièces tendance pour toutes les occasions.</p>
+                                <div class="mt-4 d-flex flex-wrap gap-3">
+                                    <a href="#nouveautes" class="btn btn-modern text-white">Voir les nouveautés</a>
+                                    <a href="#categories" class="btn btn-outline-light">Choisir une catégorie</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="carousel-item">
+            <section class="hero-modern animate-fade-in" style="background-image:
+                    linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(14,165,233,0.35) 100%),
+                    url('https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1600&q=80');">
+                <div class="container py-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="hero-content" style="max-width:560px;">
+                                <div class="hero-badge"><i class="bi bi-shop"></i> <span>Accessoires & détails</span></div>
+                                <h1>Complétez votre look</h1>
+                                <p class="hero-desc">Montres, ceintures, sacs et plus encore pour sublimer vos tenues.</p>
+                                <div class="mt-4 d-flex flex-wrap gap-3">
+                                    <a href="#categories" class="btn btn-modern text-white">Voir les catégories</a>
+                                    <a href="/commandes" class="btn btn-outline-light">Mon panier</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="carousel-item">
+            <section class="hero-modern animate-fade-in" style="background-image:
+                    linear-gradient(135deg, rgba(15,23,42,0.88) 0%, rgba(14,165,233,0.35) 100%),
+                    url('https://images.unsplash.com/photo-1528701800489-20be3c30c1d5?auto=format&fit=crop&w=1600&q=80');">
+                <div class="container py-5">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="hero-content" style="max-width:560px;">
+                                <div class="hero-badge"><i class="bi bi-shop"></i> <span>Magasin de vêtements</span></div>
+                                <h1>Ambiance boutique réelle</h1>
+                                <p class="hero-desc">Un aperçu de votre univers, avec nos pièces soigneusement sélectionnées.</p>
+                                <div class="mt-4 d-flex flex-wrap gap-3">
+                                    <a href="#nouveautes" class="btn btn-modern text-white">Découvrir</a>
+                                    <a href="/commandes" class="btn btn-outline-light">Mon panier</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<section class="container py-5 section-with-bg animate-fade-up" id="nouveautes">
+    <h2 class="text-center mb-5 section-title-modern">Nouveautés</h2>
+    <c:if test="${not empty latestProduits}">
+        <div class="row g-4">
+            <c:forEach var="p" items="${latestProduits}">
+                <div class="col-6 col-md-4 col-lg-2 animate-fade-up anim-delay-1">
+                    <a href="<c:url value='/produit?id=${p.id}'/>" class="text-decoration-none d-block h-100">
+                        <div class="card shadow-sm border-0 h-100 product-card-modern animate-scale-hover">
+                            <div class="ratio ratio-4x3 bg-light rounded-top overflow-hidden">
+                                <c:if test="${not empty p.urlImage}">
+                                    <img src="${p.urlImage}" alt="${p.name}" class="w-100 h-100 object-fit-cover" loading="lazy" onerror="this.style.display='none';">
+                                </c:if>
+                            </div>
+                            <div class="card-body p-2 text-center">
+                                <div class="small fw-semibold text-dark text-truncate" title="${p.name}">${p.name}</div>
+                                <div class="small text-muted mt-1">
+                                    <c:if test="${p.price != null}">
+                                        ${p.price} MAD
+                                    </c:if>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </c:forEach>
+        </div>
+    </c:if>
+    <c:if test="${empty latestProduits}">
+        <p class="text-center text-muted py-4">Aucun nouveau produit pour le moment.</p>
+    </c:if>
 </section>
 
-<!-- CATALOGUE -->
-<section class="container mt-5" id="catalogue">
-    <h2 class="text-center mb-3 section-title">Catalogue des repas</h2>
-
-    <!-- Barre de recherche -->
-    <div class="row mb-4">
-        <div class="col-md-6 mx-auto">
-            <div class="input-group shadow-sm">
-                <span class="input-group-text bg-white border-end-0">
-                    <i class="bi bi-search text-muted"></i>
-                </span>
-                <input type="text"
-                       id="searchCatalogue"
-                       class="form-control border-start-0"
-                       placeholder="Rechercher un plat (ex : tajine, couscous, dessert)...">
-            </div>
-        </div>
-    </div>
-
-    <div class="row" id="catalogueList">
-        <c:forEach var="repas" items="${repasList}">
-            <div class="col-6 col-md-4 mb-4 catalogue-item" data-name="${repas.name}">
-                <div class="card h-100">
-                    <img src="${repas.urlImage}" class="card-img-top" alt="${repas.name}">
-                    <div class="card-body d-flex flex-column">
-                        <div class="mb-2">
-                            <h6 class="mb-1">${repas.name}</h6>
-                            <p class="mb-0 small text-muted">Prix : <strong>${repas.price} DH</strong></p>
-                        </div>
-                        <form method="post" action="/commande" class="mt-auto">
-                            <input type="hidden" name="repasId" value="${repas.id}" />
-                            <input type="number" name="quantite" class="form-control form-control-sm mb-2" placeholder="Quantité" min="1" value="1">
-                            <div class="d-flex gap-2">
-                                <button type="submit" name="btnAction" value="panier" class="btn btn-outline-success btn-sm w-50">
-                                    Ajouter
-                                </button>
-                                <button type="submit" name="btnAction" value="commander" class="btn btn-success btn-sm w-50">
-                                    Commander
-                                </button>
-                            </div>
-                        </form>
+<section class="container py-5 section-with-bg-light animate-fade-up" id="categories">
+    <h2 class="text-center mb-5 section-title-modern">Choisissez une catégorie</h2>
+    <div class="row g-4" id="categoryList">
+        <c:forEach var="cat" items="${categories}">
+            <div class="col-12 col-md-4 col-lg-4 animate-fade-up anim-delay-2">
+                <a href="<c:url value='/categorie?id=${cat.id}'/>" class="cat-card-modern animate-scale-hover">
+                    <div class="cat-card-img">
+                        <c:if test="${not empty cat.imageUrl}">
+                            <img src="${cat.imageUrl}" alt="${cat.name}" loading="lazy" onerror="this.style.display='none';">
+                        </c:if>
+                        <i class="bi bi-grid-3x3-gap display-4 text-white opacity-75 position-relative"></i>
                     </div>
-                </div>
+                    <div class="cat-card-body">
+                        <h5 class="mb-0">${cat.name}</h5>
+                        <small>Voir les articles</small>
+                    </div>
+                </a>
             </div>
         </c:forEach>
     </div>
+    <c:if test="${empty categories}">
+        <p class="text-center text-muted py-5">Aucune catégorie pour le moment.</p>
+    </c:if>
 </section>
 
-<!-- COMMENT COMMANDER -->
-<section class="container mt-5">
-    <h2 class="text-center mb-4 section-title">Comment commander ?</h2>
-    <div class="row text-center">
-        <div class="col-md-4">
-            <h4>1</h4>
-            <p>Choisissez votre repas dans le catalogue</p>
+<section class="container mt-5 py-4 animate-fade-up" id="how-to-order">
+    <h2 class="text-center mb-5 section-title-modern">Comment commander ?</h2>
+    <div class="row text-center g-4">
+        <div class="col-md-4 animate-fade-up anim-delay-1">
+            <div class="step-num" style="font-size:2.5rem;font-weight:800;color:var(--store-primary);opacity:0.3;line-height:1;">1</div>
+            <p class="mt-2 fw-600">Choisissez une catégorie puis vos articles</p>
         </div>
-        <div class="col-md-4">
-            <h4>2</h4>
-            <p>Indiquez la quantité</p>
+        <div class="col-md-4 animate-fade-up anim-delay-2">
+            <div class="step-num" style="font-size:2.5rem;font-weight:800;color:var(--store-primary);opacity:0.3;line-height:1;">2</div>
+            <p class="mt-2 fw-600">Ajoutez au panier et indiquez les quantités</p>
         </div>
-        <div class="col-md-4">
-            <h4>3</h4>
-            <p>Nous préparons et livrons à Marrakech</p>
+        <div class="col-md-4 animate-fade-up anim-delay-3">
+            <div class="step-num" style="font-size:2.5rem;font-weight:800;color:var(--store-primary);opacity:0.3;line-height:1;">3</div>
+            <p class="mt-2 fw-600">Validez votre commande et adresse de livraison</p>
         </div>
     </div>
 </section>
 
-<!-- CONTACT -->
-<section class="container mt-5" id="contact">
-    <h2 class="text-center mb-4 section-title">Contact</h2>
+<section class="container mt-5 py-4 animate-fade-up" id="suivez-nous">
+    <h2 class="text-center mb-4 section-title-modern">Retrouvez-nous</h2>
+    <div class="row g-4 justify-content-center">
+        <div class="col-sm-6 col-md-4 animate-fade-up anim-delay-1">
+            <a href="https://www.instagram.com/storesemlali" target="_blank" rel="noopener" class="social-card text-decoration-none d-flex align-items-center gap-3 p-4 rounded-3 bg-white border-0 shadow-sm w-100" style="transition: transform 0.2s, box-shadow 0.2s;">
+                <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width:56px; height:56px; background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);">
+                    <i class="bi bi-instagram text-white fs-4"></i>
+                </div>
+                <div class="text-start">
+                    <span class="fw-bold text-dark d-block">Instagram</span>
+                    <span class="small text-muted">@storesemlali</span>
+                </div>
+                <i class="bi bi-arrow-up-right ms-auto text-secondary"></i>
+            </a>
+        </div>
+        <div class="col-sm-6 col-md-4 animate-fade-up anim-delay-2">
+            <a href="https://www.tiktok.com/@storesemlali" target="_blank" rel="noopener" class="social-card text-decoration-none d-flex align-items-center gap-3 p-4 rounded-3 bg-white border-0 shadow-sm w-100" style="transition: transform 0.2s, box-shadow 0.2s;">
+                <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0 bg-dark" style="width:56px; height:56px;">
+                    <i class="bi bi-tiktok text-white fs-4"></i>
+                </div>
+                <div class="text-start">
+                    <span class="fw-bold text-dark d-block">TikTok</span>
+                    <span class="small text-muted">@storesemlali</span>
+                </div>
+                <i class="bi bi-arrow-up-right ms-auto text-secondary"></i>
+            </a>
+        </div>
+        <div class="col-sm-6 col-md-4 animate-fade-up anim-delay-3">
+            <a href="https://www.google.com/maps/search/?api=1&query=Store+Semlali+Maroc" target="_blank" rel="noopener" class="social-card text-decoration-none d-flex align-items-center gap-3 p-4 rounded-3 bg-white border-0 shadow-sm w-100" style="transition: transform 0.2s, box-shadow 0.2s;">
+                <div class="rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width:56px; height:56px; background: var(--store-primary);">
+                    <i class="bi bi-geo-alt-fill text-white fs-4"></i>
+                </div>
+                <div class="text-start">
+                    <span class="fw-bold text-dark d-block">Localisation</span>
+                    <span class="small text-muted">Voir sur la carte</span>
+                </div>
+                <i class="bi bi-arrow-up-right ms-auto text-secondary"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="container mt-5 animate-fade-up" id="contact">
+    <h2 class="text-center mb-4 section-title-modern">Contact</h2>
     <div class="row g-4">
         <div class="col-lg-6">
             <div class="contact-card">
-                <h5 class="mb-3">Écrivez-nous</h5>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="mb-0">Écrivez-nous</h5>
+                    <span class="contact-chip"><i class="bi bi-envelope"></i>Réponse rapide</span>
+                </div>
                 <form>
                     <div class="row">
                         <div class="col-md-6">
-                            <input type="text" class="form-control mb-3" placeholder="Nom">
+                            <label class="form-label small text-muted mb-1">Nom</label>
+                            <input type="text" class="form-control mb-3" placeholder="Votre nom">
                         </div>
                         <div class="col-md-6">
-                            <input type="email" class="form-control mb-3" placeholder="Email">
+                            <label class="form-label small text-muted mb-1">Email</label>
+                            <input type="email" class="form-control mb-3" placeholder="vous@example.com">
                         </div>
                     </div>
-                    <textarea class="form-control mb-3" rows="4" placeholder="Votre message"></textarea>
-                    <button class="btn btn-cta text-white">Envoyer</button>
+                    <label class="form-label small text-muted mb-1">Message</label>
+                    <textarea class="form-control mb-3" rows="4" placeholder="Parlez-nous de votre demande..."></textarea>
+                    <button class="btn btn-modern text-white w-100">Envoyer le message</button>
                 </form>
             </div>
         </div>
         <div class="col-lg-6">
             <div class="contact-card h-100 d-flex flex-column justify-content-between">
                 <div>
-                    <h5 class="mb-3">Retrouvez Fdarna Cuisine</h5>
-                    <p class="mb-3 text-muted">Suivez nos nouveautés, menus du jour et coulisses de la cuisine sur nos réseaux sociaux.</p>
-                    <div class="d-flex align-items-center mb-3">
-                        <i class="bi bi-instagram fs-3 me-3 text-danger"></i>
-                        <div>
-                            <div class="fw-semibold">Instagram</div>
-                            <a class="social-link small" target="_blank"
-                               href="https://www.instagram.com/f_darna_cuisine?utm_source=ig_web_button_share_sheet&amp;igsh=ZDNlZDc0MzIxNw==">
-                                @f_darna_cuisine
-                            </a>
-                        </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="mb-0">Store Semlali</h5>
+                        <span class="contact-chip"><i class="bi bi-clock"></i>7j/7 en ligne</span>
                     </div>
+                    <p class="mb-3 text-muted">Pour toute question sur nos articles, tailles ou votre commande, contactez-nous directement.</p>
                     <div class="d-flex align-items-center mb-3">
-                        <i class="bi bi-tiktok fs-3 me-3"></i>
-                        <div>
-                            <div class="fw-semibold">TikTok</div>
-                            <a class="social-link small" target="_blank"
-                               href="https://www.tiktok.com/@fdarna_cuisine?_r=1&_t=ZS-94eIL2jid4G">
-                                @f_darna_cuisine
-                            </a>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center mb-1">
                         <i class="bi bi-whatsapp fs-3 me-3 text-success"></i>
                         <div>
-                            <div class="fw-semibold">WhatsApp</div>
-                            <a class="social-link small" target="_blank"
-                               href="https://wa.me/212634801200">
-                                +212 6 34 80 12 00
-                            </a>
+                            <div class="fw-semibold mb-1">WhatsApp</div>
+                            <a class="social-link small d-block" target="_blank" href="https://wa.me/212634801200">+212 6 34 80 12 00</a>
+                            <span class="small text-muted">Cliquez pour ouvrir la conversation</span>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="bi bi-geo-alt me-3 text-danger"></i>
+                        <div>
+                            <div class="fw-semibold">Adresse</div>
+                            <a class="social-link small d-block" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Store+Semlali+Maroc">Maroc</a>
+                            <span class="small text-muted">Voir notre boutique sur la carte</span>
                         </div>
                     </div>
                 </div>
-                <small class="text-muted mt-3">Disponible pour vos commandes et questions à propos de nos plats maison.</small>
             </div>
         </div>
     </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="text-white text-center mt-5 p-4">
-    <p class="mb-1">FdarnaCuisine &mdash; Repas faits maison livrés à Marrakech</p>
-    <small class="text-white-50">Suivez-nous sur Instagram et TikTok, ou écrivez-nous sur WhatsApp pour passer commande.</small>
+<footer class="footer-modern text-white mt-5 py-5 animate-fade-up">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Branding -->
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="me-2 fs-3">🛍️</div>
+                    <span class="fw-bold fs-5">Store Semlali</span>
+                </div>
+                <p class="text-white-50 small mb-0">
+                    Mode et style à votre portée. Qualité et prix doux.
+                </p>
+            </div>
+
+            <!-- Navigation -->
+            <div class="col-6 col-md-4 col-lg-3">
+                <h6 class="fw-semibold mb-3">Navigation</h6>
+                <ul class="list-unstyled small text-white-50">
+                    <li class="mb-2"><a href="/home" class="text-decoration-none text-white-50 hover-footer-link">Accueil</a></li>
+                    <li class="mb-2"><a href="#nouveautes" class="text-decoration-none text-white-50 hover-footer-link">Nouveautés</a></li>
+                    <li class="mb-2"><a href="#categories" class="text-decoration-none text-white-50 hover-footer-link">Catégories</a></li>
+                    <li class="mb-2"><a href="/commandes" class="text-decoration-none text-white-50 hover-footer-link">Mon panier</a></li>
+                </ul>
+            </div>
+
+            <!-- Service client -->
+            <div class="col-6 col-md-4 col-lg-3">
+                <h6 class="fw-semibold mb-3">Service client</h6>
+                <ul class="list-unstyled small text-white-50">
+                    <li class="mb-2"><a href="#contact" class="text-decoration-none text-white-50 hover-footer-link">Contact</a></li>
+                    <li class="mb-2"><span class="d-block">Livraison disponible</span></li>
+                    <li class="mb-2"><span class="d-block">Retours sur demande</span></li>
+                    <li class="mb-2"><span class="d-block">FAQ bientôt disponible</span></li>
+                </ul>
+            </div>
+
+            <!-- Social -->
+            <div class="col-12 col-md-12 col-lg-3">
+                <h6 class="fw-semibold mb-3">Suivez-nous</h6>
+                <div class="d-flex gap-3">
+                    <a href="https://www.instagram.com/storesemlali" target="_blank" rel="noopener"
+                       class="text-white-50 fs-5 hover-footer-icon">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                    <a href="https://www.tiktok.com/@storesemlali" target="_blank" rel="noopener"
+                       class="text-white-50 fs-5 hover-footer-icon">
+                        <i class="bi bi-tiktok"></i>
+                    </a>
+                    <a href="https://www.google.com/maps/search/?api=1&query=Store+Semlali+Maroc" target="_blank" rel="noopener"
+                       class="text-white-50 fs-5 hover-footer-icon">
+                        <i class="bi bi-geo-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-top border-white-10 mt-4 pt-3 text-center text-white-50 small">
+            &copy; 2026 Store Semlali. Tous droits réservés.
+        </div>
+    </div>
 </footer>
 
-<script>
-    // Filtrage simple du catalogue côté client
-    document.addEventListener('DOMContentLoaded', function () {
-        var input = document.getElementById('searchCatalogue');
-        if (!input) return;
-        var items = document.querySelectorAll('#catalogueList .catalogue-item');
-
-        input.addEventListener('input', function () {
-            var query = this.value.toLowerCase().trim();
-            items.forEach(function (el) {
-                var name = (el.getAttribute('data-name') || '').toLowerCase();
-                el.style.display = (query === '' || name.indexOf(query) !== -1) ? '' : 'none';
-            });
-        });
-    });
-</script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

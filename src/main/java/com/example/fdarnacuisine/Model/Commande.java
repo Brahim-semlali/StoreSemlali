@@ -15,8 +15,18 @@ public class Commande {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "repas_id")
-    private Repas repas;
+    @JoinColumn(name = "produit_id")
+    private Produit produit;
+
+    @Column(name = "produit_name")
+    private String produitName;
+
+    @Column(name = "produit_price")
+    private Double produitPrice;
+
+    @ManyToOne
+    @JoinColumn(name = "reservation_id")
+    private Reservation reservation;
 
     private Integer quantity;
 
@@ -46,12 +56,36 @@ public class Commande {
         this.user = user;
     }
 
-    public Repas getRepas() {
-        return repas;
+    public Produit getProduit() {
+        return produit;
     }
 
-    public void setRepas(Repas repas) {
-        this.repas = repas;
+    public void setProduit(Produit produit) {
+        this.produit = produit;
+    }
+
+    public String getProduitName() {
+        return produit != null ? produit.getName() : produitName;
+    }
+
+    public Double getProduitPrice() {
+        return produit != null ? produit.getPrice() : produitPrice;
+    }
+
+    public void setProduitName(String produitName) {
+        this.produitName = produitName;
+    }
+
+    public void setProduitPrice(Double produitPrice) {
+        this.produitPrice = produitPrice;
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 
     public Integer getQuantity() {
@@ -78,4 +112,3 @@ public class Commande {
         this.total = total;
     }
 }
-
