@@ -22,11 +22,34 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="menu">
-            <ul class="navbar-nav mx-auto align-items-lg-center">
+            <ul class="navbar-nav mx-auto align-items-lg-center text-center text-lg-start">
                 <li class="nav-item"><a class="nav-link active" href="/home">Accueil</a></li>
                 <li class="nav-item"><a class="nav-link" href="#nouveautes">NOUVEAUTÉ</a></li>
                 <li class="nav-item"><a class="nav-link" href="#categories">PAR PIÈCE</a></li>
             </ul>
+            <!-- Bloc recherche / panier pour mobile -->
+            <div class="d-lg-none w-100 mt-3">
+                <form class="navbar-search-mobile d-flex align-items-center mb-2" action="/recherche" method="get">
+                    <input type="search" class="form-control" name="q" placeholder="Rechercher un produit..." aria-label="Rechercher un produit">
+                    <button class="btn" type="submit" aria-label="Recherche">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+                <div class="navbar-icons-mobile d-flex justify-content-between align-items-center">
+                    <a href="/commandes" class="icon-btn" aria-label="Mon panier">
+                        <i class="bi bi-bag fs-5"></i>
+                    </a>
+                    <c:if test="${not empty user}">
+                        <a class="icon-btn position-relative ms-3" href="/notifications" title="Notifications">
+                            <i class="bi bi-bell fs-5"></i>
+                            <c:if test="${notificationCount != null && notificationCount > 0}">
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size:0.65rem;">${notificationCount > 99 ? '99+' : notificationCount}</span>
+                            </c:if>
+                        </a>
+                    </c:if>
+                </div>
+            </div>
+
             <ul class="navbar-nav ms-auto align-items-lg-center">
                 <li class="nav-item d-none d-lg-block">
                     <div class="navbar-icons me-2">

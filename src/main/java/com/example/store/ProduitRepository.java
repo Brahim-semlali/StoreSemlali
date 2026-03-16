@@ -13,6 +13,9 @@ import java.util.Optional;
 
 public interface ProduitRepository extends JpaRepository<Produit, Long> {
 
+    @Query("SELECT p FROM Produit p LEFT JOIN FETCH p.categorie ORDER BY p.id DESC")
+    List<Produit> findAllWithCategorie();
+
     @Query("SELECT p FROM Produit p LEFT JOIN FETCH p.categorie WHERE p.id = :id")
     Optional<Produit> findByIdWithCategorie(@Param("id") Long id);
 

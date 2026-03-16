@@ -121,7 +121,7 @@ public class AdminController {
     @GetMapping("/admin/catalogue")
     public String catalogue(ModelMap model) {
         List<Categorie> categories = categorieRepository.findAllByOrderByNameAsc();
-        List<Produit> produits = produitRepository.findAll();
+        List<Produit> produits = produitRepository.findAllWithCategorie();
         model.addAttribute("categories", categories);
         model.addAttribute("produitList", produits);
         log.info("GET /admin/catalogue — {} catégories, {} produits", categories.size(), produits.size());
